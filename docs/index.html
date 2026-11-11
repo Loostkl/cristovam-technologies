@@ -94,20 +94,16 @@ section{padding:72px 0;border-top:1px solid var(--line-soft)}
 .caption{font-size:.9rem;color:var(--muted);margin-top:10px}
 
 
-/* galeria */
-.gallery{margin-top:72px}
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 18px}
-.tabs button{font:600 .95rem var(--display);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:8px;padding:9px 16px;cursor:pointer;min-height:44px}
-.tabs button:hover{color:var(--text);border-color:#484f58}
-.tabs button[aria-selected=true]{color:#fff;background:var(--blue-deep);border-color:var(--blue-deep)}
-.gallery .shot img{background:var(--raised)}
-
-/* também inclui */
-.more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px;margin-top:32px}
-.more div{padding:18px 0;border-top:1px solid var(--line-soft)}
-.more h3{font-size:1.05rem}
-.more p{color:var(--muted);margin-top:4px;font-size:1rem}
-@media (max-width:720px){.more{grid-template-columns:1fr}}
+/* passeio pelas telas */
+.tour{margin-top:40px}
+.stop{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:44px;padding:48px 0;border-top:1px solid var(--line-soft);align-items:start}
+.stop.solo{grid-template-columns:minmax(0,1fr);padding:34px 0}
+.stop h3{font-size:1.5rem}
+.stop p{color:var(--muted);margin-top:12px}
+.stop ul{margin:14px 0 0;padding-left:1.1em;color:var(--muted)}
+.stop li{margin-top:6px}
+.stop .shot{position:sticky;top:20px}
+@media (max-width:860px){.stop{grid-template-columns:1fr;gap:22px;padding:36px 0}.stop .shot{position:static}}
 
 /* regras */
 .rules{display:grid;gap:0;margin-top:28px;max-width:760px}
@@ -191,39 +187,158 @@ footer a:hover{color:var(--text)}
 <section id="recursos">
   <div class="wrap">
     <div class="intro">
-      <h2>O que ele faz</h2>
-      <p>Ajustes do Windows, um modo que prepara o PC quando o jogo abre, e ferramentas para testar mouse, teclado, controle e monitor. Ele mostra o que mediu e não promete ganho de FPS.</p>
+      <h2>Conheça o app, tela por tela</h2>
+      <p>O menu lateral tem 16 telas. Aqui estão todas, na ordem em que aparecem, começando pela tela inicial. O app mostra o que mediu e não promete ganho de FPS.</p>
     </div>
 
-    <div class="feature">
-      <div class="text">
-        <h3>Cada ajuste diz o risco e tem desfazer</h3>
-        <p>Antes do primeiro ajuste, o app cria um ponto de restauração do Windows. Cada ajuste guarda o valor original e volta exatamente a ele, inclusive apagando o que não existia antes.</p>
-        <ul>
-          <li>Risco informado em cada card</li>
-          <li>Aviso quando exige administrador ou reiniciar</li>
-          <li>Botão para desfazer todos de uma vez</li>
-        </ul>
-      </div>
-      <div>
-        <div class="shot"><img src="img/otimizacao-ajustes.webp" width="1400" height="692" loading="lazy" alt="Tela Otimização do app, com cards de ajustes, chaves, etiquetas de risco e avisos"></div>
-      </div>
-    </div>
-
-    <div class="feature flip">
-      <div>
+    <div class="tour">
+      <article class="stop">
+        <div class="text">
+          <h3>Dashboard</h3>
+          <p>É a tela inicial, a que abre primeiro. A faixa de cima mostra, o tempo todo, o uso de CPU, GPU e RAM do seu PC.</p>
+          <p>O destaque é o Modo Gamer: uma chave que aplica de uma vez um conjunto de ajustes seguros para jogar (energia, Game Mode, menos interrupções e menos input lag). Ao desligar, tudo volta como estava. O botão Otimizar agora faz o mesmo com um clique.</p>
+          <ul>
+            <li>Saúde do sistema: nota de 0 a 100 com arquivos temporários, apps que iniciam com o Windows, espaço em disco e temperatura</li>
+            <li>Desempenho em jogos: quantos ajustes do Modo Gamer estão ativos, latência e jitter da rede</li>
+            <li>Tarefas automáticas: o que está rodando sozinho, como a limpeza de memória</li>
+            <li>Ações rápidas (limpar memória, limpar DNS, fechar processos, criar perfil) e a atividade recente</li>
+          </ul>
+        </div>
+        <div class="shot"><img src="img/dashboard.webp" width="1600" height="1007" loading="lazy" alt="Dashboard do app, com o Modo Gamer ligado, os três cartões de status, as ações rápidas e a atividade recente"></div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Otimização</h3>
+          <p>A lista de ajustes do Windows, agrupados por assunto. Cada ajuste é um card com uma chave, o risco (baixo, médio ou alto) e um aviso quando precisa de administrador ou de reiniciar o PC.</p>
+          <p>Antes do primeiro ajuste o app cria um ponto de restauração do Windows. Cada ajuste guarda o valor original e volta exatamente a ele, e há um botão para desfazer todos de uma vez.</p>
+          <ul>
+            <li>Dois ajustes mexem em segurança do Windows e ficam num grupo à parte, com confirmação (veja mais abaixo)</li>
+          </ul>
+        </div>
+        <div class="shot"><img src="img/otimizacao-ajustes.webp" width="1400" height="692" loading="lazy" alt="Tela Otimização, com cards de ajustes, chaves, etiquetas de risco e avisos"></div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Jogos</h3>
+          <p>Ferramentas para investigar input lag e conhecer o seu equipamento.</p>
+          <p>O medidor de polling rate lê a taxa real que o seu mouse entrega ao Windows: é só mover o mouse em círculos. O app apenas mede, e a taxa se configura no software do fabricante.</p>
+          <ul>
+            <li>Timer do Windows, só informativo</li>
+            <li>Ajustes de input lag e de jogos</li>
+            <li>Dispositivos detectados (mouse, teclado, fone e microfone), com fabricante e software oficial</li>
+            <li>Sensores em tempo real</li>
+          </ul>
+        </div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Tarefas</h3>
+          <p>O que roda sozinho para manter o PC leve. Nada é apagado, e você reativa quando quiser.</p>
+          <p>Dá para ligar a limpeza automática de memória (a cada 5 minutos até 1 hora, opcionalmente só quando a RAM passar de 70%) e a do cache DNS. Também lista os apps que iniciam com o Windows, cada um com a sua chave, e os programas em segundo plano que mais usam memória, para você escolher quais fechar.</p>
+          <ul>
+            <li>A limpeza de arquivos programada roda no horário que você marcar, nas categorias que você escolher, e só apaga o que a aba Limpeza também apagaria. A Lixeira nunca é esvaziada sozinha.</li>
+          </ul>
+        </div>
+        <div class="shot"><img src="img/limpeza-programada.webp" width="1600" height="529" loading="lazy" alt="Parte da tela Tarefas: processos em segundo plano e limpeza de arquivos programada"></div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Modo Jogo</h3>
+          <p>Abriu o jogo, o app prepara o PC. Fechou o jogo, ele desfaz tudo. Nada é fechado nem apagado, e a prioridade só é baixada, nunca subida, para os outros programas.</p>
+          <p>Você escolhe as ações que valem quando um jogo abre, e o app reconhece o jogo sozinho.</p>
+          <ul>
+            <li>Meus jogos: adicione o programa de um jogo que não foi reconhecido</li>
+            <li>Perfil por jogo: por exemplo, ligar o overlay de FPS só no seu jogo competitivo</li>
+            <li>Listas de exceção (o que nunca é tratado como jogo e o que nunca perde prioridade)</li>
+            <li>Histórico de cada sessão</li>
+            <li>Se o app for fechado à força no meio do jogo, na próxima abertura ele devolve o plano de energia e os ajustes</li>
+          </ul>
+        </div>
         <div class="shot"><img src="img/modo-jogo-acoes.webp" width="1400" height="914" loading="lazy" alt="Tela Modo Jogo com as ações que o app aplica quando um jogo abre"></div>
-      </div>
-      <div class="text">
-        <h3>Modo Jogo: abriu o jogo, o PC se prepara. Fechou, tudo volta.</h3>
-        <p>O app reconhece o jogo, aplica as ações que você marcou e desfaz tudo quando o jogo fecha. Nada é fechado nem apagado, e a prioridade só é baixada, nunca subida, para outros programas.</p>
-        <ul>
-          <li>Prioridade do jogo, memória e plano de energia</li>
-          <li>Perfil por jogo e relatório de cada sessão</li>
-          <li>Overlay de FPS opcional</li>
-        </ul>
-      </div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Processos</h3>
+          <p>Controle fino por programa: prioridade de CPU, núcleos, memória e disco. Você também cria regras por jogo que se aplicam sozinhas quando ele abre e voltam ao normal quando ele fecha.</p>
+          <p>Os ajustes manuais valem só enquanto o programa estiver aberto, e um botão restaura o que você mexeu. O app não mexe em programas do sistema, antivírus e anti-cheat, e se o Windows negar o acesso, aparece como bloqueado e ele não insiste.</p>
+        </div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Entrada</h3>
+          <p>O teste do mouse e do teclado. Mostra cada clique e cada tecla com o tempo exato que ficou apertada.</p>
+          <p>Serve para achar botão com defeito: o app conta os cliques por segundo e os acionamentos duplos involuntários, que denunciam um switch gasto. Também tem um teste de tempo de reação. Nada é capturado fora da página do teste.</p>
+        </div>
+        <div class="shot"><img src="img/entrada.webp" width="1418" height="848" loading="lazy" alt="Teste de entrada do mouse, com contagem de cliques por botão e cliques por segundo"></div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Controle</h3>
+          <p>O mesmo tipo de teste, para o controle: botões, gatilhos e analógicos em tempo real.</p>
+          <p>Mostra a deriva (o analógico solto deveria ficar em zero), o alcance do analógico, apertos duplos, a vibração e o tempo de reação. Precisa de um controle conectado, e o navegador só o enxerga depois do primeiro botão apertado.</p>
+        </div>
+        <div class="shot"><img src="img/controle.webp" width="1600" height="900" loading="lazy" alt="Teste de controle, ainda sem nenhum controle conectado"></div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Mira</h3>
+          <p>Um treino de 30 segundos para aquecer e medir a sua consistência de mira, sem abrir o jogo. Há três modos: Gridshot, Flick e Tracking.</p>
+          <p>O app guarda o seu recorde. É um treino em tela plana (2D): ele não simula a mira 3D nem a sensibilidade de nenhum jogo.</p>
+        </div>
+        <div class="shot"><img src="img/mira.webp" width="1600" height="900" loading="lazy" alt="Treino de mira, no modo Gridshot"></div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Sensibilidade</h3>
+          <p>Leva a mesma mão de um jogo para outro. O app mantém igual a distância que o mouse percorre para dar uma volta completa (360°) e diz a sensibilidade equivalente no jogo de destino.</p>
+          <p>Mostra cm por 360° e eDPI, deixa salvar favoritos e também ajuda quem não sabe a própria sensibilidade: você escolhe uma distância e ele mostra o valor em cada jogo.</p>
+        </div>
+        <div class="shot"><img src="img/sensibilidade.webp" width="1600" height="900" loading="lazy" alt="Conversor de sensibilidade entre Counter-Strike 2 e Valorant"></div>
+      </article>
+      <article class="stop">
+        <div class="text">
+          <h3>Monitor</h3>
+          <p>Padrões em tela cheia para achar defeitos: cores sólidas para pixels mortos, degradê, sombras e grade. Esc sai do teste.</p>
+          <p>Também mede a taxa de atualização real da tela em 4 segundos, com o tempo por quadro e os quadros atrasados. O teste mostra o que você enxerga, e medir o tempo de resposta em milissegundos exige equipamento próprio.</p>
+        </div>
+        <div class="shot"><img src="img/monitor.webp" width="1400" height="884" loading="lazy" alt="Teste de monitor com a taxa de atualização e padrões de tela"></div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Programas</h3>
+          <p>Marque o que quer e instale tudo de uma vez, sem abrir site por site. Usa o winget, o instalador oficial do Windows, e só lista programas conhecidos de fornecedores oficiais. O botão Atualizar tudo cuida das versões.</p>
+          <p>A outra aba mostra tudo o que está instalado no PC. Para remover, o app chama o desinstalador do próprio programa.</p>
+        </div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Áudio</h3>
+          <p>Escolha o fone e o microfone padrão e ajuste o volume.</p>
+          <p>O teste do microfone mostra o nível ao vivo, ou faz um teste guiado de 6 segundos que diz se o volume está bom. O app só lê o volume do sinal enquanto você testa, não grava nada. Ajustes que ficam no driver, como o ganho extra do microfone, têm atalho para a janela certa do Windows.</p>
+        </div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Overlay FPS</h3>
+          <p>Mostra FPS, 1% low (o seu pior 1% de quadros, que revela as travadas) e uso do PC por cima do jogo, sem injetar nada nele.</p>
+          <p>Os números vêm do PresentMon, ferramenta aberta da Intel que só observa o que o Windows registra. Você escolhe posição, tamanho e opacidade, e o overlay aparece sozinho quando um jogo abre e some quando fecha. Funciona em jogos em janela ou janela sem bordas, e em tela cheia exclusiva o Windows pode escondê-lo.</p>
+        </div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Limpeza</h3>
+          <p>Lista o que dá para limpar (arquivos temporários, caches e outros) com o tamanho de cada item antes de apagar. Você marca o que quer e limpa. Arquivos em uso são ignorados.</p>
+          <p>Esta é a única parte que não tem desfazer: o app só mexe nas pastas listadas e nunca em documentos, fotos, senhas ou histórico.</p>
+        </div>
+      </article>
+      <article class="stop solo">
+        <div class="text">
+          <h3>Configurações</h3>
+          <p>Controla o segundo plano: continuar na bandeja ao fechar a janela, e iniciar junto com o Windows já escondido. Mostra também dados do app (versão, se está como administrador, pasta de dados e backups) e o hardware do PC.</p>
+        </div>
+      </article>
     </div>
+    <p class="caption">Os prints do Dashboard, Entrada, Controle, Mira, Sensibilidade e Tarefas vêm de um PC com Windows. Os de Otimização, Modo Jogo e Monitor vêm do ambiente de desenvolvimento.</p>
 
     <div class="feature" id="seguranca">
       <div class="text">
@@ -238,42 +353,6 @@ footer a:hover{color:var(--text)}
       <div>
         <div class="shot"><img src="img/otimizacao-seguranca.webp" width="1400" height="742" loading="lazy" alt="Grupo Segurança da tela Otimização, com risco alto e avisos em destaque"></div>
       </div>
-    </div>
-
-    <div class="feature flip">
-      <div>
-        <div class="shot"><img src="img/sensibilidade.webp" width="1600" height="900" loading="lazy" alt="Conversor de sensibilidade entre Counter-Strike 2 e Valorant"></div>
-      </div>
-      <div class="text">
-        <h3>Leve a mesma mira de um jogo para outro</h3>
-        <p>O conversor mantém igual a distância que o mouse percorre para uma volta completa. Mostra centímetros por 360°, eDPI e deixa salvar favoritos.</p>
-      </div>
-    </div>
-
-    <p class="caption">Prints da interface do app, capturados em um PC com Windows e no ambiente de desenvolvimento.</p>
-
-    <div class="gallery">
-      <h3>Mais telas</h3>
-      <div class="tabs" role="tablist" aria-label="Telas do app">
-        <button type="button" role="tab" aria-selected="true" aria-controls="gal-painel" data-src="img/dashboard.webp" data-h="1007" data-cap="O Modo Gamer liga ou desliga de uma vez um conjunto de ajustes seguros. Ao lado, ações rápidas para memória, DNS e perfis." data-alt="Dashboard com o Modo Gamer e as ações rápidas">Dashboard</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="gal-painel" data-src="img/entrada.webp" data-h="838" data-cap="Teste de entrada: cliques por segundo, acionamentos duplos de um switch com defeito, teclado e tempo de reação." data-alt="Teste de entrada do mouse">Teste de entrada</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="gal-painel" data-src="img/mira.webp" data-h="788" data-cap="Treino de mira com Gridshot, Flick e Tracking, para aquecer sem abrir o jogo." data-alt="Treino de mira, modo Gridshot">Treino de mira</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="gal-painel" data-src="img/controle.webp" data-h="788" data-cap="Teste de controle: botões, gatilhos e analógicos ao vivo, deriva, vibração e tempo de reação. Aqui sem nenhum controle conectado." data-alt="Teste de controle, sem controle conectado">Teste de controle</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="gal-painel" data-src="img/monitor.webp" data-h="884" data-cap="Teste de monitor: taxa de atualização, cores sólidas para achar pixels mortos, degradê, sombras e grade." data-alt="Teste de monitor com a taxa de atualização e padrões de tela">Teste de monitor</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="gal-painel" data-src="img/tarefas.webp" data-h="884" data-cap="Limpeza automática de memória e de cache DNS no intervalo que você escolher." data-alt="Tarefas, com a limpeza automática de memória e DNS">Tarefas</button>
-        <button type="button" role="tab" aria-selected="false" aria-controls="gal-painel" data-src="img/limpeza-programada.webp" data-h="529" data-cap="Limpeza de arquivos programada: você escolhe a frequência, o horário e as categorias. O app só apaga o que a aba Limpeza também apagaria, e a Lixeira nunca é esvaziada sozinha." data-alt="Tarefas, com processos em segundo plano e limpeza de arquivos programada">Limpeza programada</button>
-      </div>
-      <div class="shot" id="gal-painel" role="tabpanel"><img id="gal-img" src="img/dashboard.webp" width="1600" height="1007" alt="Dashboard com o Modo Gamer e as ações rápidas"></div>
-      <p class="caption" id="gal-cap" style="font-size:1rem">O Modo Gamer liga ou desliga de uma vez um conjunto de ajustes seguros. Ao lado, ações rápidas para memória, DNS e perfis.</p>
-    </div>
-
-    <div class="more">
-      <div><h3>Testes de entrada</h3><p>Cliques por segundo, acionamentos duplos de um switch com defeito, tempo de reação e teclado.</p></div>
-      <div><h3>Controle e monitor</h3><p>Deriva e alcance do analógico, gatilhos, vibração, pixels mortos, ghosting e taxa de atualização.</p></div>
-      <div><h3>Overlay e monitoramento</h3><p>FPS, 1% low e frametime por cima do jogo, com CPU, GPU, RAM e temperatura.</p></div>
-      <div><h3>Limpeza e memória</h3><p>Arquivos temporários e caches com o tamanho de cada item antes de apagar. Memória e DNS manual ou automático.</p></div>
-      <div><h3>Programas e áudio</h3><p>Instala e atualiza programas de uma vez pelo winget, desinstala pelo desinstalador oficial e controla volume e microfone.</p></div>
-      <div><h3>Mira</h3><p>Treino de mira dentro do app, para aquecer sem abrir o jogo.</p></div>
     </div>
   </div>
 </section>
@@ -343,16 +422,6 @@ footer a:hover{color:var(--text)}
         ['Nada além disso foi alterado.', false]
       ]);
     }
-  });
-})();
-
-(function () {
-  var abas = document.querySelectorAll('.tabs button'), img = document.getElementById('gal-img'), cap = document.getElementById('gal-cap');
-  abas.forEach(function (b) {
-    b.addEventListener('click', function () {
-      abas.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
-      img.src = b.dataset.src; img.height = b.dataset.h; img.alt = b.dataset.alt; cap.textContent = b.dataset.cap;
-    });
   });
 })();
 </script>
