@@ -103,7 +103,10 @@ section{padding:72px 0;border-top:1px solid var(--line-soft)}
 .stop ul{margin:14px 0 0;padding-left:1.1em;color:var(--muted)}
 .stop li{margin-top:6px}
 .stop .shot{position:sticky;top:20px}
-@media (max-width:860px){.stop{grid-template-columns:1fr;gap:22px;padding:36px 0}.stop .shot{position:static}}
+.shots{display:grid;gap:16px}
+.shots .shot{position:static}
+.stop.multi .text{position:sticky;top:20px}
+@media (max-width:860px){.stop{grid-template-columns:1fr;gap:22px;padding:36px 0}.stop .shot,.stop.multi .text{position:static}}
 
 /* regras */
 .rules{display:grid;gap:0;margin-top:28px;max-width:760px}
@@ -206,18 +209,23 @@ footer a:hover{color:var(--text)}
         </div>
         <div class="shot"><img src="img/dashboard.webp" width="1600" height="1007" loading="lazy" alt="Dashboard do app, com o Modo Gamer ligado, os três cartões de status, as ações rápidas e a atividade recente"></div>
       </article>
-      <article class="stop">
+      <article class="stop multi">
         <div class="text">
           <h3>Otimização</h3>
           <p>A lista de ajustes do Windows, agrupados por assunto. Cada ajuste é um card com uma chave, o risco (baixo, médio ou alto) e um aviso quando precisa de administrador ou de reiniciar o PC.</p>
           <p>Antes do primeiro ajuste o app cria um ponto de restauração do Windows. Cada ajuste guarda o valor original e volta exatamente a ele, e há um botão para desfazer todos de uma vez.</p>
           <ul>
+            <li>No topo, atalhos para o painel da NVIDIA e para o Isolamento de núcleo do Windows, com a situação atual dele</li>
+            <li>Perfis: salve os ajustes ativos e aplique de novo quando quiser</li>
             <li>Dois ajustes mexem em segurança do Windows e ficam num grupo à parte, com confirmação (veja mais abaixo)</li>
           </ul>
         </div>
-        <div class="shot"><img src="img/otimizacao-ajustes.webp" width="1400" height="692" loading="lazy" alt="Tela Otimização, com cards de ajustes, chaves, etiquetas de risco e avisos"></div>
+        <div class="shots">
+          <div class="shot"><img src="img/otimizacao-ajustes.webp" width="1600" height="900" loading="lazy" alt="Tela Otimização, com atalhos do driver da GPU e do Isolamento de núcleo, perfis e os primeiros ajustes de desempenho"></div>
+        <div class="shot"><img src="img/otimizacao-riscos.webp" width="1600" height="961" loading="lazy" alt="Mais ajustes da tela Otimização, cada um com etiqueta de risco e avisos"></div>
+        </div>
       </article>
-      <article class="stop solo">
+      <article class="stop multi">
         <div class="text">
           <h3>Jogos</h3>
           <p>Ferramentas para investigar input lag e conhecer o seu equipamento.</p>
@@ -228,6 +236,10 @@ footer a:hover{color:var(--text)}
             <li>Dispositivos detectados (mouse, teclado, fone e microfone), com fabricante e software oficial</li>
             <li>Sensores em tempo real</li>
           </ul>
+        </div>
+        <div class="shots">
+          <div class="shot"><img src="img/jogos.webp" width="1600" height="900" loading="lazy" alt="Tela Jogos, com o medidor de polling rate, o timer do Windows e os ajustes de jogos e input lag"></div>
+        <div class="shot"><img src="img/jogos-dispositivos.webp" width="1600" height="935" loading="lazy" alt="Dispositivos detectados (mouse, teclado, fone e microfone) e sensores em tempo real"></div>
         </div>
       </article>
       <article class="stop">
@@ -241,7 +253,7 @@ footer a:hover{color:var(--text)}
         </div>
         <div class="shot"><img src="img/limpeza-programada.webp" width="1600" height="529" loading="lazy" alt="Parte da tela Tarefas: processos em segundo plano e limpeza de arquivos programada"></div>
       </article>
-      <article class="stop">
+      <article class="stop multi">
         <div class="text">
           <h3>Modo Jogo</h3>
           <p>Abriu o jogo, o app prepara o PC. Fechou o jogo, ele desfaz tudo. Nada é fechado nem apagado, e a prioridade só é baixada, nunca subida, para os outros programas.</p>
@@ -254,7 +266,10 @@ footer a:hover{color:var(--text)}
             <li>Se o app for fechado à força no meio do jogo, na próxima abertura ele devolve o plano de energia e os ajustes</li>
           </ul>
         </div>
-        <div class="shot"><img src="img/modo-jogo-acoes.webp" width="1400" height="914" loading="lazy" alt="Tela Modo Jogo com as ações que o app aplica quando um jogo abre"></div>
+        <div class="shots">
+          <div class="shot"><img src="img/modo-jogo-acoes.webp" width="1600" height="895" loading="lazy" alt="Tela Modo Jogo, com as ações que o app aplica quando um jogo abre e as formas de reconhecer um jogo"></div>
+        <div class="shot"><img src="img/modo-jogo-excecoes.webp" width="1600" height="901" loading="lazy" alt="Perfil por jogo, listas de exceção e a opção de tratar um programa como jogo agora"></div>
+        </div>
       </article>
       <article class="stop solo">
         <div class="text">
@@ -324,12 +339,13 @@ footer a:hover{color:var(--text)}
           <p>Os números vêm do PresentMon, ferramenta aberta da Intel que só observa o que o Windows registra. Você escolhe posição, tamanho e opacidade, e o overlay aparece sozinho quando um jogo abre e some quando fecha. Funciona em jogos em janela ou janela sem bordas, e em tela cheia exclusiva o Windows pode escondê-lo.</p>
         </div>
       </article>
-      <article class="stop solo">
+      <article class="stop">
         <div class="text">
           <h3>Limpeza</h3>
-          <p>Lista o que dá para limpar (arquivos temporários, caches e outros) com o tamanho de cada item antes de apagar. Você marca o que quer e limpa. Arquivos em uso são ignorados.</p>
-          <p>Esta é a única parte que não tem desfazer: o app só mexe nas pastas listadas e nunca em documentos, fotos, senhas ou histórico.</p>
+          <p>Lista o que dá para limpar, com o tamanho de cada item antes de apagar: arquivos temporários do usuário e do Windows, relatórios de erro, miniaturas, cache de shaders, cache dos navegadores e a Lixeira. Você marca o que quer, vê o total selecionado e limpa. Arquivos em uso são ignorados.</p>
+          <p>Itens com efeito colateral trazem um aviso na própria linha, como o cache de shaders (o jogo recompila no começo) e a Lixeira (o que está nela se perde de vez). Esta é a única parte que não tem desfazer: o app só mexe nas pastas listadas e nunca em documentos, fotos, senhas ou histórico.</p>
         </div>
+        <div class="shot"><img src="img/limpeza.webp" width="1600" height="899" loading="lazy" alt="Tela Limpeza, com cada item e o tamanho que ocupa antes de apagar"></div>
       </article>
       <article class="stop solo">
         <div class="text">
@@ -338,7 +354,7 @@ footer a:hover{color:var(--text)}
         </div>
       </article>
     </div>
-    <p class="caption">Os prints do Dashboard, Entrada, Controle, Mira, Sensibilidade e Tarefas vêm de um PC com Windows. Os de Otimização, Modo Jogo e Monitor vêm do ambiente de desenvolvimento.</p>
+    <p class="caption">Os prints vêm de um PC com Windows, exceto o do Monitor e o do grupo Segurança, que vêm do ambiente de desenvolvimento.</p>
 
     <div class="feature" id="seguranca">
       <div class="text">
