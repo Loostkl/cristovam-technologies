@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cristovam Technologies</title>
+<meta name="description" content="App para deixar o Windows pronto para jogar. Cada ajuste mostra o risco, guarda o valor original e pode ser desfeito. Para Windows 10 e 11.">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:title" content="Cristovam Technologies">
+<meta property="og:description" content="Deixe o Windows pronto para jogar e volte atrás quando quiser. Ajustes com risco explicado, Modo Jogo, overlay de FPS e testes de entrada.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://loostkl.github.io/cristovam-technologies/img/otimizacao-seguranca.webp">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117; --raised:#161b22; --raised-2:#1c2128; --line:#30363d; --line-soft:#21262d;
+  --text:#e6edf3; --muted:#9da7b3; --blue:#58a6ff; --blue-deep:#1f6feb; --green:#3fb950; --amber:#d29922; --red:#f85149;
+  --display:"Sora",system-ui,"Segoe UI",sans-serif; --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --wrap:1120px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:400 18px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:#79c0ff}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+.wrap{width:min(var(--wrap),100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(2.1rem,5vw + .5rem,3.7rem);font-weight:700}
+h2{font-size:clamp(1.5rem,2.4vw + .6rem,2.2rem);font-weight:600}
+h3{font-size:1.2rem;font-weight:600;letter-spacing:-.01em}
+p{max-width:62ch}
+
+/* topo */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;font:600 1.05rem var(--display)}
+.brand img{width:38px;height:36px;object-fit:contain}
+.top nav{display:flex;gap:22px;font-size:.98rem}
+.top nav a{color:var(--muted);text-decoration:none}
+.top nav a:hover{color:var(--text)}
+@media (max-width:640px){.top nav{display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:center;padding:56px 0 72px}
+.hero p.lead{font-size:1.22rem;color:var(--muted);margin-top:22px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:8px;font:600 1rem var(--display);text-decoration:none;border:1px solid var(--line);color:var(--text);background:var(--raised)}
+.btn:hover{border-color:#484f58;color:var(--text);background:var(--raised-2)}
+.btn.main{background:var(--blue-deep);border-color:var(--blue-deep);color:#fff}
+.btn.main:hover{background:#388bfd;border-color:#388bfd}
+.fine{font-size:.95rem;color:var(--muted);margin-top:18px}
+@media (max-width:900px){.hero{grid-template-columns:1fr;gap:40px;padding-top:32px}}
+
+/* demonstração do desfazer */
+.demo{background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 24px 60px -30px rgba(31,111,235,.45)}
+.tweak{display:flex;gap:16px;align-items:flex-start}
+.tweak b{font:600 1.05rem var(--display);display:block}
+.tweak p{font-size:.98rem;color:var(--muted);margin-top:4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{font-size:.82rem;padding:1px 10px;border:1px solid #484f58;border-radius:20px;color:var(--muted)}
+.chip.adm{border-color:rgba(210,153,34,.55);color:var(--amber)}
+.sw{position:relative;flex:none;width:52px;height:30px;margin-top:2px}
+.sw input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;margin:0}
+.sw span{position:absolute;inset:0;border-radius:20px;background:#21262d;border:1px solid #484f58;transition:background .2s,border-color .2s}
+.sw span::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#8b949e;transition:transform .2s,background .2s}
+.sw input:checked+span{background:linear-gradient(90deg,#58a6ff,#1f6feb);border-color:transparent}
+.sw input:checked+span::after{transform:translateX(22px);background:#0d1117}
+.sw input:focus-visible+span{outline:2px solid var(--blue);outline-offset:3px}
+.log{margin-top:20px;border-top:1px solid var(--line);padding-top:16px;font-size:.98rem;min-height:132px}
+.log ul{list-style:none;padding:0;display:grid;gap:9px}
+.log li{position:relative;padding-left:20px}
+.log li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.log li.ok::before{background:var(--green)}
+.log code{font:500 .9em ui-monospace,Consolas,monospace;color:#c9d1d9;background:#21262d;padding:1px 6px;border-radius:5px}
+.demo small{display:block;margin-top:14px;color:var(--muted);font-size:.88rem}
+
+/* seções */
+section{padding:72px 0;border-top:1px solid var(--line-soft)}
+.intro{max-width:62ch}
+.intro p{color:var(--muted);margin-top:14px}
+.feature{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:center;margin-top:56px}
+.feature.flip{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}
+.feature.flip .text{order:2}
+.feature .text p{color:var(--muted);margin-top:12px}
+.feature .text ul{margin:14px 0 0;padding-left:1.1em;color:var(--muted)}
+.feature .text li{margin-top:6px}
+.shot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--raised);box-shadow:0 30px 70px -40px rgba(0,0,0,.9)}
+.shot img{width:100%;height:auto}
+@media (max-width:860px){.feature,.feature.flip{grid-template-columns:1fr;gap:24px}.feature.flip .text{order:0}}
+.caption{font-size:.9rem;color:var(--muted);margin-top:10px}
+
+/* também inclui */
+.more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px;margin-top:32px}
+.more div{padding:18px 0;border-top:1px solid var(--line-soft)}
+.more h3{font-size:1.05rem}
+.more p{color:var(--muted);margin-top:4px;font-size:1rem}
+@media (max-width:720px){.more{grid-template-columns:1fr}}
+
+/* regras */
+.rules{display:grid;gap:0;margin-top:28px;max-width:760px}
+.rules div{display:grid;grid-template-columns:minmax(0,230px) 1fr;gap:24px;padding:20px 0;border-top:1px solid var(--line-soft)}
+.rules h3{font-size:1.05rem}
+.rules p{color:var(--muted)}
+@media (max-width:640px){.rules div{grid-template-columns:1fr;gap:4px}}
+
+/* instalar */
+ol.steps{margin-top:28px;padding:0;list-style:none;display:grid;gap:18px;max-width:700px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:14px}
+ol.steps li::before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid #484f58;font:600 .95rem var(--display);color:var(--blue)}
+ol.steps b{font-family:var(--display);font-weight:600}
+ol.steps p{color:var(--muted);margin-top:2px}
+pre{margin-top:10px;background:#010409;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font:500 .88rem ui-monospace,Consolas,monospace;color:#c9d1d9}
+
+/* perguntas */
+details{border-top:1px solid var(--line-soft);padding:18px 0;max-width:760px}
+details:last-of-type{border-bottom:1px solid var(--line-soft)}
+summary{cursor:pointer;font:600 1.05rem var(--display);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--blue);font-size:1.3rem;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{color:var(--muted);margin-top:10px}
+
+footer{border-top:1px solid var(--line-soft);padding:40px 0 56px;color:var(--muted);font-size:.95rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--text)}
+
+/* entrada da página: só o cartão da demonstração, uma vez */
+@media (prefers-reduced-motion:no-preference){
+  .demo{animation:entra .7s .1s both cubic-bezier(.2,.7,.2,1)}
+  @keyframes entra{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sw span,.sw span::after{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#"><img src="img/logo.png" alt="">Cristovam Technologies</a>
+    <nav aria-label="Seções">
+      <a href="#recursos">Recursos</a>
+      <a href="#seguranca">Segurança</a>
+      <a href="#instalar">Instalar</a>
+      <a href="#perguntas">Perguntas</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Deixe o Windows pronto para jogar. E volte atrás quando quiser.</h1>
+        <p class="lead">O Cristovam Technologies aplica só os ajustes que você escolhe, mostra o risco de cada um e guarda o valor original para desfazer.</p>
+        <div class="cta">
+          <a class="btn main" href="https://github.com/Loostkl/cristovam-technologies/releases">Baixar para Windows</a>
+          <a class="btn" href="https://github.com/Loostkl/cristovam-technologies">Ver no GitHub</a>
+        </div>
+        <p class="fine">Versão de testes para Windows 10 e 11 (64 bits). Ainda não foi validada em muitos computadores.</p>
+      </div>
+
+      <div class="demo" aria-labelledby="demo-titulo">
+        <div class="tweak">
+          <label class="sw"><input type="checkbox" id="demo-chave" aria-describedby="demo-titulo"><span></span></label>
+          <div>
+            <b id="demo-titulo">Desativar aceleração do mouse</b>
+            <p>Deixa o movimento 1:1 com a mão. Essencial em jogos de mira.</p>
+            <div class="chips"><span class="chip">risco baixo</span></div>
+          </div>
+        </div>
+        <div class="log" id="demo-log" aria-live="polite">
+          <ul><li>Ligue a chave para ver o que o app faz.</li></ul>
+        </div>
+        <small>Exemplo ilustrativo do funcionamento. Os valores variam de PC para PC.</small>
+      </div>
+    </div>
+  </main>
+</div>
+
+<section id="recursos">
+  <div class="wrap">
+    <div class="intro">
+      <h2>O que ele faz</h2>
+      <p>Ajustes do Windows, um modo que prepara o PC quando o jogo abre, e ferramentas para testar mouse, teclado, controle e monitor. Ele mostra o que mediu e não promete ganho de FPS.</p>
+    </div>
+
+    <div class="feature">
+      <div class="text">
+        <h3>Cada ajuste diz o risco e tem desfazer</h3>
+        <p>Antes do primeiro ajuste, o app cria um ponto de restauração do Windows. Cada ajuste guarda o valor original e volta exatamente a ele, inclusive apagando o que não existia antes.</p>
+        <ul>
+          <li>Risco informado em cada card</li>
+          <li>Aviso quando exige administrador ou reiniciar</li>
+          <li>Botão para desfazer todos de uma vez</li>
+        </ul>
+      </div>
+      <div>
+        <div class="shot"><img src="img/otimizacao-ajustes.webp" width="1400" height="692" loading="lazy" alt="Tela Otimização do app, com cards de ajustes, chaves, etiquetas de risco e avisos"></div>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div>
+        <div class="shot"><img src="img/modo-jogo-acoes.webp" width="1400" height="914" loading="lazy" alt="Tela Modo Jogo com as ações que o app aplica quando um jogo abre"></div>
+      </div>
+      <div class="text">
+        <h3>Modo Jogo: abriu o jogo, o PC se prepara. Fechou, tudo volta.</h3>
+        <p>O app reconhece o jogo, aplica as ações que você marcou e desfaz tudo quando o jogo fecha. Nada é fechado nem apagado, e a prioridade só é baixada, nunca subida, para outros programas.</p>
+        <ul>
+          <li>Prioridade do jogo, memória e plano de energia</li>
+          <li>Perfil por jogo e relatório de cada sessão</li>
+          <li>Overlay de FPS opcional</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feature" id="seguranca">
+      <div class="text">
+        <h3>Ajustes de segurança só com a sua confirmação</h3>
+        <p>Dois ajustes mexem em proteções do Windows: a Integridade da memória e o Defender em tempo real. Eles ficam num grupo à parte, com risco alto, aviso fixo e uma janela de confirmação.</p>
+        <ul>
+          <li>Nunca entram em perfis nem em ações em lote</li>
+          <li>O app não tenta burlar a Proteção contra Adulteração</li>
+          <li>Se o Windows ignorar o comando, o ajuste não fica marcado como feito</li>
+        </ul>
+      </div>
+      <div>
+        <div class="shot"><img src="img/otimizacao-seguranca.webp" width="1400" height="742" loading="lazy" alt="Grupo Segurança da tela Otimização, com risco alto e avisos em destaque"></div>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div>
+        <div class="shot"><img src="img/sensibilidade.webp" width="1400" height="914" loading="lazy" alt="Conversor de sensibilidade entre Counter-Strike 2 e Valorant"></div>
+      </div>
+      <div class="text">
+        <h3>Leve a mesma mira de um jogo para outro</h3>
+        <p>O conversor mantém igual a distância que o mouse percorre para uma volta completa. Mostra centímetros por 360°, eDPI e deixa salvar favoritos.</p>
+      </div>
+    </div>
+
+    <p class="caption">Prints da interface do app, capturados em ambiente de desenvolvimento.</p>
+
+    <div class="more">
+      <div><h3>Testes de entrada</h3><p>Cliques por segundo, acionamentos duplos de um switch com defeito, tempo de reação e teclado.</p></div>
+      <div><h3>Controle e monitor</h3><p>Deriva e alcance do analógico, gatilhos, vibração, pixels mortos, ghosting e taxa de atualização.</p></div>
+      <div><h3>Overlay e monitoramento</h3><p>FPS, 1% low e frametime por cima do jogo, com CPU, GPU, RAM e temperatura.</p></div>
+      <div><h3>Limpeza e memória</h3><p>Arquivos temporários e caches com o tamanho de cada item antes de apagar. Memória e DNS manual ou automático.</p></div>
+      <div><h3>Programas e áudio</h3><p>Instala e atualiza programas de uma vez pelo winget, desinstala pelo desinstalador oficial e controla volume e microfone.</p></div>
+      <div><h3>Mira</h3><p>Treino de mira dentro do app, para aquecer sem abrir o jogo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="regras">
+  <div class="wrap">
+    <div class="intro"><h2>Regras que o app segue</h2></div>
+    <div class="rules">
+      <div><h3>Nada sai do seu PC</h3><p>O app não envia seus dados. Ele só usa a internet quando você pede (baixar o medidor de FPS, instalar ou atualizar programas) e para medir a latência com conexões curtas ao 1.1.1.1.</p></div>
+      <div><h3>Nada é feito sem escolha</h3><p>Nenhum programa é fechado, apagado ou desinstalado sem você escolher. Sistema, antivírus e anti-cheat ficam em paz.</p></div>
+      <div><h3>Sem promessa de FPS</h3><p>O app mostra o que mediu. Ajustes de efeito pequeno vêm com esse aviso no próprio card.</p></div>
+      <div><h3>Anti-cheat</h3><p>Nenhum código é injetado em jogos. Mesmo assim, nenhuma ferramenta garante que todo anti-cheat vai aceitá-la: em jogos competitivos, use por sua conta e risco.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="instalar">
+  <div class="wrap">
+    <div class="intro"><h2>Instalar</h2><p>Precisa de Windows 10 ou 11 de 64 bits e permissão de administrador. Não precisa instalar Python.</p></div>
+    <ol class="steps">
+      <li><div><b>Baixe o instalador</b><p>Na <a href="https://github.com/Loostkl/cristovam-technologies/releases">página de versões</a>, em Assets, baixe o arquivo <code>Cristovam-Technologies-Setup-&lt;versão&gt;.exe</code>.</p></div></li>
+      <li><div><b>Abra e confirme o aviso do Windows</b><p>O instalador ainda não tem assinatura digital. Se aparecer "O Windows protegeu o computador", clique em Mais informações e depois em Executar assim mesmo.</p></div></li>
+      <li><div><b>Siga o assistente</b><p>Atalho na área de trabalho e início com o Windows são opcionais. Ao abrir o app, aceite o pedido de administrador.</p></div></li>
+    </ol>
+    <p class="fine" style="margin-top:28px">Quer conferir o arquivo? A página de cada versão mostra o SHA-256. No PowerShell, na pasta do arquivo:</p>
+    <pre>Get-FileHash .\Cristovam-Technologies-Setup-&lt;versão&gt;.exe -Algorithm SHA256</pre>
+  </div>
+</section>
+
+<section id="perguntas">
+  <div class="wrap">
+    <div class="intro"><h2>Perguntas</h2></div>
+    <div style="margin-top:28px">
+      <details><summary>Dá para desfazer tudo?</summary><p>Sim, os ajustes. Cada um guarda o valor original e tem desfazer, e existe um botão para desfazer todos. A única exceção é a limpeza de arquivos, que não tem volta.</p></details>
+      <details><summary>Quanto de FPS eu ganho?</summary><p>Não dá para prometer. Depende do PC e do jogo, e vários ajustes têm efeito pequeno. O app mostra o que mediu e avisa quando um ajuste só vale para quem tem um sintoma específico.</p></details>
+      <details><summary>É seguro usar em jogos com anti-cheat?</summary><p>O app não injeta código em jogos nem mexe em anti-cheats. Mesmo assim, nenhuma ferramenta pode garantir aceitação por todos os sistemas. Em jogos competitivos, use por sua conta e risco.</p></details>
+      <details><summary>Por que o Windows avisa na instalação?</summary><p>Porque o instalador ainda não tem assinatura digital de um editor verificado. Você pode conferir o SHA-256 do arquivo na página da versão.</p></details>
+      <details><summary>Como desinstalo?</summary><p>Em Configurações do Windows, Aplicativos, Cristovam Technologies, Desinstalar. Antes, abra o app e use Desfazer nos ajustes que aplicou. O desinstalador pergunta se você quer apagar também os dados do programa.</p></details>
+      <details><summary>Encontrei um problema.</summary><p>Abra uma <a href="https://github.com/Loostkl/cristovam-technologies/issues">issue no GitHub</a> contando o que aconteceu e qual é o seu Windows.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Cristovam Technologies. Projeto pessoal em desenvolvimento.</span>
+    <span><a href="https://github.com/Loostkl/cristovam-technologies">GitHub</a> &nbsp; <a href="https://github.com/Loostkl/cristovam-technologies/releases">Versões</a> &nbsp; <a href="https://github.com/Loostkl/cristovam-technologies/issues">Problemas</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var chave = document.getElementById('demo-chave'), log = document.getElementById('demo-log');
+  function mostrar(linhas) {
+    log.innerHTML = '<ul>' + linhas.map(function (l) { return '<li' + (l[1] ? ' class="ok"' : '') + '>' + l[0] + '</li>'; }).join('') + '</ul>';
+  }
+  chave.addEventListener('change', function () {
+    if (chave.checked) {
+      mostrar([
+        ['Ponto de restauração criado antes do primeiro ajuste', true],
+        ['Valor original guardado: <code>MouseSpeed = 1</code>', true],
+        ['Aplicado: <code>MouseSpeed = 0</code>. O ponteiro segue a mão 1:1.', true]
+      ]);
+    } else {
+      mostrar([
+        ['Desfeito: <code>MouseSpeed</code> voltou para <code>1</code>', true],
+        ['Nada além disso foi alterado.', false]
+      ]);
+    }
+  });
+})();
+</script>
+</body>
+</html>
