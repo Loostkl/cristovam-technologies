@@ -1,10 +1,10 @@
-# Cristovam Technologies
+# LostBoost
 
 App de otimização para **Windows 10 e 11** voltado a jogos: ajustes do Windows com desfazer, **Modo Jogo** que prepara o PC sozinho quando um jogo abre, limpeza, monitoramento, testes de mouse, teclado, controle e monitor, e overlay de FPS.
 
 ## Baixar
 
-Baixe o instalador na página de [**Releases**](https://github.com/Loostkl/cristovam-technologies/releases), em *Assets*: o arquivo `Cristovam-Technologies-Setup-<versão>.exe`.
+Baixe o instalador na página de [**Releases**](https://github.com/Loostkl/cristovam-technologies/releases), em *Assets*: o arquivo `LostBoost-Setup-<versão>.exe`.
 
 > **Primeira versão.** O programa ainda não foi validado em muitos computadores. Se algo não funcionar, abra uma *issue* aqui (veja [Problemas](#problemas)).
 
@@ -27,7 +27,7 @@ Baixe o instalador na página de [**Releases**](https://github.com/Loostkl/crist
 A página de cada release mostra o **SHA-256** do instalador. No PowerShell, na pasta do arquivo:
 
 ```powershell
-Get-FileHash .\Cristovam-Technologies-Setup-<versão>.exe -Algorithm SHA256
+Get-FileHash .\LostBoost-Setup-<versão>.exe -Algorithm SHA256
 ```
 
 O resultado deve ser igual ao da página do release.
@@ -53,7 +53,7 @@ O programa **não promete ganho de FPS**: ele mostra o que mediu. Nada é fechad
 
 ## Desinstalar
 
-*Configurações do Windows > Aplicativos > Cristovam Technologies > Desinstalar.* Antes, abra o programa e use "Desfazer" nos ajustes que aplicou. O desinstalador pergunta se você quer apagar também os dados do programa (padrão: manter).
+*Configurações do Windows > Aplicativos > LostBoost > Desinstalar.* Antes, abra o programa e use "Desfazer" nos ajustes que aplicou. O desinstalador pergunta se você quer apagar também os dados do programa (padrão: manter).
 
 ## Problemas
 
